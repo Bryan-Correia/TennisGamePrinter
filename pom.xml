@@ -10,6 +10,8 @@
     <packaging>pom</packaging>
     <modules>
         <module>domain</module>
+        <module>adapters</module>
+        <module>bootstrap</module>
     </modules>
 
     <properties>
@@ -18,6 +20,12 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <junit.version>5.12.0</junit.version>
         <mockito.version>5.16.0</mockito.version>
+        <!-- SonarCloud configuration  -->
+        <sonar.projectKey>Bryan-Correia_TennisGamePrinter</sonar.projectKey>
+        <sonar.projectName>TennisGamePrinter</sonar.projectName>
+        <sonar.organization>bryan-correia</sonar.organization>
+        <sonar.host.url>https://sonarcloud.io</sonar.host.url>
+        <sonar.coverage.jacoco.xmlReportPaths>${maven.multiModuleProjectDirectory}/bootstrap/target/site/jacoco-aggregate/jacoco.xml</sonar.coverage.jacoco.xmlReportPaths>
     </properties>
 
     <dependencies>
@@ -36,5 +44,28 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>test-coverage</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.jacoco</groupId>
+                        <artifactId>jacoco-maven-plugin</artifactId>
+                        <version>0.8.12</version>
+                        <executions>
+                            <execution>
+                                <id>prepare-agent</id>
+                                <goals>
+                                    <goal>prepare-agent</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 
 </project>

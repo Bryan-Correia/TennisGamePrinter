@@ -23,4 +23,10 @@ jobs:
           cache: maven
 
       - name: Build, run tests, and generate coverage
-        run: mvn -B verify
+        run: mvn -B verify -Ptest-coverage
+
+      - name: Analyze code with Sonar
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn -B org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
