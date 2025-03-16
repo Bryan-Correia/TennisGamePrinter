@@ -9,6 +9,6 @@ import fr.tennisgameprinter.domain.game.player.Player;
  */
 public record Point<P> (P winner) {
     public boolean isWonBy(final Player<P> player) {
-        return false;
+        return winner.equals(player.getId());
     }
 }
