@@ -9,8 +9,15 @@ import java.util.Objects;
  */
 public class Player<P> {
 
-    /** the identifier of the player. */
+    /** A indexed array which allows to map a score index to the actual score. */
+    private static final int[] SCORE = {0, 15, 30, 40};
+
+    /** The identifier of the player. */
     private final P id;
+    /** Whether this player has the advantage. */
+    private boolean hasAdvantage;
+    /** An index indicating the score of the player. */
+    private int scoreIndex;
 
     /**
      * Creates a new {@link Player} with the provided identifier.
@@ -21,31 +28,52 @@ public class Player<P> {
     }
 
     /**
-     * @return the identifier of this player.
+     * @return The identifier of this player.
      */
     public P getId() {
         return id;
     }
 
     /**
-     * @return the score for this player.
+     * @return The score of this player.
      */
     public int getScore() {
-        return 0;
+        return SCORE[scoreIndex];
     }
 
     /**
-     * Updates the state of this player by making it win the point over the provided player.
+     * Updates the state of this player by making him win the point over the provided player.
      * @param otherPlayer the other player against which the point was won.
      */
     public void winsPointOver(final Player<P> otherPlayer) {
+        if (otherPlayer.hasAdvantage()) {
+            otherPlayer.losesAdvantage();
+        } else if (getScore() == 40 && otherPlayer.getScore() == 40) {
+            this.acquiresAdvantage();
+        } else {
+            scoreIndex++;
+        }
     }
 
     /**
-     * @return whether this player has the advantage.
+     * @return Whether this player has the advantage.
      */
     public boolean hasAdvantage() {
-        return false;
+        return hasAdvantage;
+    }
+
+    /**
+     * Makes this player lose the advantage.
+     */
+    public void losesAdvantage() {
+        hasAdvantage = false;
+    }
+
+    /**
+     * Makes this player acquire the advantage.
+     */
+    public void acquiresAdvantage() {
+        hasAdvantage = true;
     }
 
 }
