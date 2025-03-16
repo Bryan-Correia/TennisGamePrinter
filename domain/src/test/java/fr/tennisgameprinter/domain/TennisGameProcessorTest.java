@@ -3,7 +3,7 @@ package fr.tennisgameprinter.domain;
 import fr.tennisgameprinter.domain.game.factory.TennisGameFactory;
 import fr.tennisgameprinter.domain.game.input.TennisGameInput;
 import fr.tennisgameprinter.domain.game.player.Player;
-import fr.tennisgameprinter.domain.game.point.Point;
+import fr.tennisgameprinter.domain.game.point.input.Point;
 import fr.tennisgameprinter.domain.ports.deserializer.InputDeserializer;
 import fr.tennisgameprinter.domain.ports.probe.GameStateProbe;
 import fr.tennisgameprinter.domain.validator.GameConsistencyValidator;

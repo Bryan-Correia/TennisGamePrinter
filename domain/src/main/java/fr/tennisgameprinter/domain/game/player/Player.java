@@ -18,4 +18,8 @@ public class Player<P> {
         return id;
     }
 
+    public int getScore() {
+        return 0;
+    }
+
 }

@@ -1,6 +1,6 @@
 package fr.tennisgameprinter.domain.validator;
 
-import fr.tennisgameprinter.domain.game.point.Point;
+import fr.tennisgameprinter.domain.game.point.input.Point;
 
 import java.util.List;
 
