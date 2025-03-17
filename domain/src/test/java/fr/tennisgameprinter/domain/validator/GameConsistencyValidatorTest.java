@@ -18,7 +18,7 @@ import static org.mockito.Mockito.*;
 class GameConsistencyValidatorTest {
 
     @Test
-    public void testValidate_withNullFirstPlayer() {
+    void testValidate_withNullFirstPlayer() {
         // GIVEN a ProcessedPointsCounter instance
         ProcessedPointsCounter<Character> processedPointsCounter = mock(ProcessedPointsCounter.class);
         // AND a TennisGameFactory
@@ -36,7 +36,7 @@ class GameConsistencyValidatorTest {
     }
 
     @Test
-    public void testValidate_withNullSecondPlayer() {
+    void testValidate_withNullSecondPlayer() {
         // GIVEN a ProcessedPointsCounter instance
         ProcessedPointsCounter<Character> processedPointsCounter = (ProcessedPointsCounter<Character>) mock(ProcessedPointsCounter.class);
         // AND a TennisGameFactory
@@ -54,7 +54,7 @@ class GameConsistencyValidatorTest {
     }
 
     @Test
-    public void testValidate_withSameFirstAndSecondPlayer() {
+    void testValidate_withSameFirstAndSecondPlayer() {
         // GIVEN a ProcessedPointsCounter instance
         ProcessedPointsCounter<Character> processedPointsCounter = mock(ProcessedPointsCounter.class);
         // AND a TennisGameFactory
@@ -72,7 +72,7 @@ class GameConsistencyValidatorTest {
     }
 
     @Test
-    public void testValidate_withPlayerAndPointMismatch() {
+    void testValidate_withPlayerAndPointMismatch() {
         // GIVEN a list of Point where each winner is identified by a Character
         Point<Character> pointA = new Point<>('A');
         Point<Character> pointB = new Point<>('B');
@@ -102,7 +102,7 @@ class GameConsistencyValidatorTest {
     }
 
     @Test
-    public void testValidate() {
+    void testValidate() {
         // GIVEN a list of Point where each winner is identified by a Character
         Point<Character> pointA = new Point<>('A');
         Point<Character> pointB = new Point<>('B');
@@ -135,7 +135,7 @@ class GameConsistencyValidatorTest {
     }
 
     @Test
-    public void testValidate_withMorePointsThanNeededToCloseTheGame() {
+    void testValidate_withMorePointsThanNeededToCloseTheGame() {
         // GIVEN a list of Point where each winner is identified by a Character
         Point<Character> pointA = new Point<>('A');
         Point<Character> pointB = new Point<>('B');
@@ -165,7 +165,7 @@ class GameConsistencyValidatorTest {
     }
 
     @Test
-    public void testValidate_withLessPointsThanNeededToCloseTheGame() {
+    void testValidate_withLessPointsThanNeededToCloseTheGame() {
         // GIVEN a list of Point where each winner is identified by a Character
         Point<Character> pointA = new Point<>('A');
         Point<Character> pointB = new Point<>('B');
