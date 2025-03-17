@@ -32,7 +32,7 @@ class GameConsistencyValidatorTest {
                 () -> gameConsistencyValidator.validate(null, 'B', List.of()),
                 "An exception should have been caught as the first player provided is null.");
         // AND its message matches our expectation
-        assertEquals("A tennis game must have two players.", inconsistentGameException.getMessage());
+        assertEquals("A tennis game must have two different players.", inconsistentGameException.getMessage());
     }
 
     @Test
@@ -50,7 +50,7 @@ class GameConsistencyValidatorTest {
                 () -> gameConsistencyValidator.validate('A', null, List.of()),
                 "An exception should have been caught as the first player provided is null.");
         // AND its message matches our expectation
-        assertEquals("A tennis game must have two players.", inconsistentGameException.getMessage());
+        assertEquals("A tennis game must have two different players.", inconsistentGameException.getMessage());
     }
 
     @Test
@@ -68,7 +68,7 @@ class GameConsistencyValidatorTest {
                 () -> gameConsistencyValidator.validate('A', 'A', List.of()),
                 "An exception should have been caught as the first player provided is null.");
         // AND its message matches our expectation
-        assertEquals("A tennis game must have two players.", inconsistentGameException.getMessage());
+        assertEquals("A tennis game must have two different players.", inconsistentGameException.getMessage());
     }
 
     @Test
@@ -161,7 +161,7 @@ class GameConsistencyValidatorTest {
                 () -> gameConsistencyValidator.validate('A', 'B', points),
                 "An InconsistentGameException should have been thrown as there were more points than needed to actually end the game.");
         // AND its message matches our expectation
-        assertEquals("The provided tennis game is inconsistent has it showcased more points than needed to end the game.", inconsistentGameException.getMessage());
+        assertEquals("The provided tennis game is inconsistent as it showcased more points than needed to end the game.", inconsistentGameException.getMessage());
     }
 
     @Test
@@ -191,7 +191,7 @@ class GameConsistencyValidatorTest {
                 () -> gameConsistencyValidator.validate('A', 'B', points),
                 "An InconsistentGameException should have been thrown as there were not enough points to end the game.");
         // AND its message matches our expectation
-        assertEquals("The provided tennis game is inconsistent has it showcased less points than needed to end the game.", inconsistentGameException.getMessage());
+        assertEquals("The provided tennis game is inconsistent as it showcased less points than needed to end the game.", inconsistentGameException.getMessage());
         // AND the points were processed by the TennisGame instance before we checked whether the game is over
         InOrder inOrder = inOrder(tennisGame);
         inOrder.verify(tennisGame).process(points);
