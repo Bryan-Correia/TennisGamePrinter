@@ -35,7 +35,7 @@ public class TennisGame<P> {
     public TennisGame(Player<P> firstPlayer, Player<P> secondPlayer, final GameStateListener<P> gameStateListener) {
         this.firstPlayer = Objects.requireNonNull(firstPlayer, "the provided first player must not be null.");
         this.secondPlayer = Objects.requireNonNull(secondPlayer, "the provided second player must not be null.");
-        this.gameStateListener = Objects.requireNonNull(gameStateListener, "the provided game printer must not be null");
+        this.gameStateListener = Objects.requireNonNull(gameStateListener, "the provided game listener must not be null");
     }
 
     /**

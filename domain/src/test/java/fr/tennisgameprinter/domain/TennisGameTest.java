@@ -99,7 +99,7 @@ class TennisGameTest {
         // AND our two Player instances that are identified by those points
         Player<Character> playerA = new Player<>('A');
         Player<Character> playerB = new Player<>('B');
-        // AND a GameStatePrinter instance
+        // AND a GameStateListener instance
         GameStateListener<Character> gameStateListener = mock(GameStateListener.class);
         // AND our TennisGame instance
         TennisGame<Character> tennisGame = new TennisGame<>(playerA, playerB, gameStateListener);
