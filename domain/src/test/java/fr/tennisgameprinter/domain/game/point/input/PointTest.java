@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PointTest {
 
     @Test
-    public void testIsWonBy() {
+    void testIsWonBy() {
         // GIVEN a Player identified by 'A'
         Player<Character> player = new Player<>('A');
         // AND a Point won by that player

@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class PlayerTest {
 
     @Test
-    public void testConstructor() {
+    void testConstructor() {
         // WHEN we create a new player identified as 'A'
         Player<Character> player = new Player<>('A');
         // THEN it is identified as 'A'
@@ -17,7 +17,7 @@ class PlayerTest {
     }
 
     @Test
-    public void testWinsPointOver() {
+    void testWinsPointOver() {
         // GIVEN our first player identified by character 'A'
         Player<Character> firstPlayer = new Player<>('A');
         // AND our second player identified by character 'B'
