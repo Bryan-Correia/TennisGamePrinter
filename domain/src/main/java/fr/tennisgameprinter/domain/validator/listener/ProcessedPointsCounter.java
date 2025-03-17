@@ -11,27 +11,33 @@ import fr.tennisgameprinter.domain.ports.listener.GameStateListener;
  */
 public class ProcessedPointsCounter<P> implements GameStateListener<P> {
 
+    /** The points counter that gets incremented everytime this component gets notified of a point. */
+    private int pointsCounter = 0;
+
     @Override
     public void onPoint(final RegularPoint<P> regularPoint) {
-
+        pointsCounter++;
     }
 
     @Override
     public void onAdvantageGained(final AdvantagePoint<P> advantagePoint) {
-
+        pointsCounter++;
     }
 
     @Override
     public void onDeuce() {
-
+        pointsCounter++;
     }
 
     @Override
     public void onVictory(final VictoryPoint<P> victoryPoint) {
-
+        pointsCounter++;
     }
 
+    /**
+     * @return the amount of points that this component was notified of.
+     */
     public int getPointsCounter() {
-        return 0;
+        return pointsCounter;
     }
 }
