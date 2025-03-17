@@ -6,11 +6,14 @@ import fr.tennisgameprinter.domain.game.input.TennisGameInput;
 import fr.tennisgameprinter.domain.validator.exception.InconsistentGameException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.ApplicationContext;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest(classes = TennisGamePrinterBootstrapConfig.class)
 class TennisGamePrinterBootstrapConfigTest {
+
     @Autowired
     private ApplicationContext applicationContext;
 
