@@ -2,7 +2,7 @@ package fr.tennisgameprinter.domain.game.factory;
 
 import fr.tennisgameprinter.domain.TennisGame;
 import fr.tennisgameprinter.domain.game.player.Player;
-import fr.tennisgameprinter.domain.ports.probe.GameStateProbe;
+import fr.tennisgameprinter.domain.ports.listener.GameStateListener;
 
 /**
  * Represents a class which handles the creation of a {@link TennisGame}.
@@ -10,5 +10,5 @@ import fr.tennisgameprinter.domain.ports.probe.GameStateProbe;
  */
 @FunctionalInterface
 public interface TennisGameFactory<P> {
-    TennisGame<P> create(Player<P> playerA, Player<P> playerB, GameStateProbe<P> probe);
+    TennisGame<P> create(Player<P> playerA, Player<P> playerB, GameStateListener<P> listener);
 }

@@ -5,7 +5,7 @@ import fr.tennisgameprinter.domain.game.point.input.Point;
 import fr.tennisgameprinter.domain.game.point.output.AdvantagePoint;
 import fr.tennisgameprinter.domain.game.point.output.RegularPoint;
 import fr.tennisgameprinter.domain.game.point.output.VictoryPoint;
-import fr.tennisgameprinter.domain.ports.probe.GameStateProbe;
+import fr.tennisgameprinter.domain.ports.listener.GameStateListener;
 
 import java.util.List;
 import java.util.Objects;
@@ -20,22 +20,22 @@ public class TennisGame<P> {
     private final Player<P> firstPlayer;
     /** The second {@link Player}. */
     private final Player<P> secondPlayer;
-    /** The {@link GameStateProbe} to notify after processing a {@link Point}. */
-    private final GameStateProbe<P> gameStateProbe;
+    /** The {@link GameStateListener} to notify after processing a {@link Point}. */
+    private final GameStateListener<P> gameStateListener;
 
     /** Whether this game is over. */
     private boolean isGameOver;
 
     /**
-     * Creates a new {@link TennisGame} with the provided two provided {@link Player}s and {@link GameStateProbe}.
+     * Creates a new {@link TennisGame} with the provided two provided {@link Player}s and {@link GameStateListener}.
      * @param firstPlayer the first player.
      * @param secondPlayer the second player.
-     * @param gameStateProbe the {@link GameStateProbe} to notify of each point.
+     * @param gameStateListener the {@link GameStateListener} to notify of each point.
      */
-    public TennisGame(Player<P> firstPlayer, Player<P> secondPlayer, final GameStateProbe<P> gameStateProbe) {
+    public TennisGame(Player<P> firstPlayer, Player<P> secondPlayer, final GameStateListener<P> gameStateListener) {
         this.firstPlayer = Objects.requireNonNull(firstPlayer, "the provided first player must not be null.");
         this.secondPlayer = Objects.requireNonNull(secondPlayer, "the provided second player must not be null.");
-        this.gameStateProbe = Objects.requireNonNull(gameStateProbe, "the provided game printer must not be null");
+        this.gameStateListener = Objects.requireNonNull(gameStateListener, "the provided game printer must not be null");
     }
 
     /**
@@ -63,18 +63,18 @@ public class TennisGame<P> {
         }
         give(point);
         if (isDeuce()) {
-            gameStateProbe.onDeuce();
+            gameStateListener.onDeuce();
             return;
         }
         if (advantageToFirstPlayer()) {
-            gameStateProbe.onAdvantageGained(new AdvantagePoint<>(firstPlayer.getId()));
+            gameStateListener.onAdvantageGained(new AdvantagePoint<>(firstPlayer.getId()));
             return;
         }
         if (advantageToSecondPlayer()) {
-            gameStateProbe.onAdvantageGained(new AdvantagePoint<>(secondPlayer.getId()));
+            gameStateListener.onAdvantageGained(new AdvantagePoint<>(secondPlayer.getId()));
             return;
         }
-        gameStateProbe.onPoint(new RegularPoint<>(firstPlayer.getId(), secondPlayer.getId(), firstPlayer.getScore(), secondPlayer.getScore()));
+        gameStateListener.onPoint(new RegularPoint<>(firstPlayer.getId(), secondPlayer.getId(), firstPlayer.getScore(), secondPlayer.getScore()));
     }
 
     /**
@@ -122,10 +122,10 @@ public class TennisGame<P> {
      */
     private boolean isVictoryByPoints(final Point<P> point) {
         if (point.isWonBy(firstPlayer) && firstPlayer.getScore() == 40 && secondPlayer.getScore() < 40) {
-            gameStateProbe.onVictory(new VictoryPoint<>(firstPlayer.getId()));
+            gameStateListener.onVictory(new VictoryPoint<>(firstPlayer.getId()));
             return true;
         } else if (point.isWonBy(secondPlayer) && secondPlayer.getScore() == 40 && firstPlayer.getScore() < 40) {
-            gameStateProbe.onVictory(new VictoryPoint<>(secondPlayer.getId()));
+            gameStateListener.onVictory(new VictoryPoint<>(secondPlayer.getId()));
             return true;
         }
         return false;
@@ -141,10 +141,10 @@ public class TennisGame<P> {
             return false;
         }
         if (point.isWonBy(firstPlayer) && firstPlayer.hasAdvantage()) {
-            gameStateProbe.onVictory(new VictoryPoint<>(firstPlayer.getId()));
+            gameStateListener.onVictory(new VictoryPoint<>(firstPlayer.getId()));
             return true;
         } else if (point.isWonBy(secondPlayer) && secondPlayer.hasAdvantage()) {
-            gameStateProbe.onVictory(new VictoryPoint<>(secondPlayer.getId()));
+            gameStateListener.onVictory(new VictoryPoint<>(secondPlayer.getId()));
             return true;
         }
         return false;

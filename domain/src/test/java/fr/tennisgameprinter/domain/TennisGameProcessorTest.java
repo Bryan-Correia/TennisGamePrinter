@@ -5,7 +5,7 @@ import fr.tennisgameprinter.domain.game.input.TennisGameInput;
 import fr.tennisgameprinter.domain.game.player.Player;
 import fr.tennisgameprinter.domain.game.point.input.Point;
 import fr.tennisgameprinter.domain.ports.deserializer.InputDeserializer;
-import fr.tennisgameprinter.domain.ports.probe.GameStateProbe;
+import fr.tennisgameprinter.domain.ports.listener.GameStateListener;
 import fr.tennisgameprinter.domain.validator.GameConsistencyValidator;
 import fr.tennisgameprinter.domain.validator.exception.InconsistentGameException;
 import org.junit.jupiter.api.Test;
@@ -30,14 +30,14 @@ public class TennisGameProcessorTest {
         when(inputDeserializer.deserialize(input)).thenReturn(points);
         // AND a GameConsistencyValidator
         GameConsistencyValidator<Character> gameConsistencyValidator = mock(GameConsistencyValidator.class);
-        // AND a GameStateProbe
-        GameStateProbe<Character> gameStateProbe = mock(GameStateProbe.class);
+        // AND a GameStateListener
+        GameStateListener<Character> gameStateListener = mock(GameStateListener.class);
         // AND a TennisGameFactory that allows creating a TennisGame
         TennisGameFactory<Character> tennisGameFactory = mock(TennisGameFactory.class);
         TennisGame<Character> tennisGame = mock(TennisGame.class);
-        when(tennisGameFactory.create(any(Player.class), any(Player.class), eq(gameStateProbe))).thenReturn(tennisGame);
+        when(tennisGameFactory.create(any(Player.class), any(Player.class), eq(gameStateListener))).thenReturn(tennisGame);
         // AND our TennisGameProcessor built from the previously defined dependencies
-        TennisGameProcessor<String, Character> tennisGameProcessor = new TennisGameProcessor<>(inputDeserializer, gameConsistencyValidator, gameStateProbe, tennisGameFactory);
+        TennisGameProcessor<String, Character> tennisGameProcessor = new TennisGameProcessor<>(inputDeserializer, gameConsistencyValidator, gameStateListener, tennisGameFactory);
         // AND our TennisGameInput which defines that our tennis game is composed of our input and players identified by 'A' and 'B'
         TennisGameInput<String, Character> tennisGameInput = new TennisGameInput<>(input, 'A', 'B');
 
@@ -48,11 +48,11 @@ public class TennisGameProcessorTest {
         verify(inputDeserializer).deserialize(input);
         // AND the game consistency validator has validated that the sequence of points was valid
         verify(gameConsistencyValidator).validate('A', 'B', points);
-        // AND the tennis game factory was created with the expected players and GameStateProbe
+        // AND the tennis game factory was created with the expected players and GameStateListener
         verify(tennisGameFactory).create(
                 argThat(player -> player.getId().equals('A')),
                 argThat(player -> player.getId().equals('B')),
-                eq(gameStateProbe)
+                eq(gameStateListener)
         );
         // AND the tennis game factory has processed our points
         verify(tennisGame).process(points);
@@ -71,14 +71,14 @@ public class TennisGameProcessorTest {
         // AND a GameConsistencyValidator
         GameConsistencyValidator<Character> gameConsistencyValidator = mock(GameConsistencyValidator.class);
         doThrow(new InconsistentGameException("the game is inconsistent")).when(gameConsistencyValidator).validate('A', 'B', points);
-        // AND a GameStateProbe
-        GameStateProbe<Character> gameStateProbe = mock(GameStateProbe.class);
+        // AND a GameStateListener
+        GameStateListener<Character> gameStateListener = mock(GameStateListener.class);
         // AND a TennisGameFactory that allows creating a TennisGame
         TennisGameFactory<Character> tennisGameFactory = mock(TennisGameFactory.class);
         TennisGame<Character> tennisGame = mock(TennisGame.class);
-        when(tennisGameFactory.create(any(Player.class), any(Player.class), eq(gameStateProbe))).thenReturn(tennisGame);
+        when(tennisGameFactory.create(any(Player.class), any(Player.class), eq(gameStateListener))).thenReturn(tennisGame);
         // AND our TennisGameProcessor built from the previously defined dependencies
-        TennisGameProcessor<String, Character> tennisGameProcessor = new TennisGameProcessor<>(inputDeserializer, gameConsistencyValidator, gameStateProbe, tennisGameFactory);
+        TennisGameProcessor<String, Character> tennisGameProcessor = new TennisGameProcessor<>(inputDeserializer, gameConsistencyValidator, gameStateListener, tennisGameFactory);
         // AND our TennisGameInput which defines that our tennis game is composed of our input and players identified by 'A' and 'B'
         TennisGameInput<String, Character> tennisGameInput = new TennisGameInput<>(input, 'A', 'B');
 

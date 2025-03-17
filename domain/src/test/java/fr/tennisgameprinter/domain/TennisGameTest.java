@@ -5,7 +5,7 @@ import fr.tennisgameprinter.domain.game.point.input.Point;
 import fr.tennisgameprinter.domain.game.point.output.AdvantagePoint;
 import fr.tennisgameprinter.domain.game.point.output.RegularPoint;
 import fr.tennisgameprinter.domain.game.point.output.VictoryPoint;
-import fr.tennisgameprinter.domain.ports.probe.GameStateProbe;
+import fr.tennisgameprinter.domain.ports.listener.GameStateListener;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -25,26 +25,26 @@ class TennisGameTest {
         // AND our two Player instances that are identified by those points
         Player<Character> playerA = new Player<>('A');
         Player<Character> playerB = new Player<>('B');
-        // AND a GameStateProbe instance
-        GameStateProbe<Character> gameStateProbe = mock(GameStateProbe.class);
+        // AND a GameStateListener instance
+        GameStateListener<Character> gameStateListener = mock(GameStateListener.class);
         // AND our TennisGame instance
-        TennisGame<Character> tennisGame = new TennisGame<>(playerA, playerB, gameStateProbe);
+        TennisGame<Character> tennisGame = new TennisGame<>(playerA, playerB, gameStateListener);
         // WHEN we attempt to process the points
         tennisGame.process(points);
         // THEN playerA has a score of 40
         assertEquals(40, playerA.getScore());
         // AND playerB has a score of 15
         assertEquals(15, playerB.getScore());
-        // AND the GameStateProbe was notified exactly four times for a regular point
-        verify(gameStateProbe, times(4)).onPoint(any());
-        // AND the GameStateProbe was notified of the expected regular points
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 15, 0));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 15, 15));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 30, 15));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 40, 15));
-        // AND the GameStateProbe was notified of a single victory, which is player A's victory
-        verify(gameStateProbe).onVictory(any());
-        verify(gameStateProbe).onVictory(new VictoryPoint<>('A'));
+        // AND the GameStateListener was notified exactly four times for a regular point
+        verify(gameStateListener, times(4)).onPoint(any());
+        // AND the GameStateListener was notified of the expected regular points
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 15, 0));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 15, 15));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 30, 15));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 40, 15));
+        // AND the GameStateListener was notified of a single victory, which is player A's victory
+        verify(gameStateListener).onVictory(any());
+        verify(gameStateListener).onVictory(new VictoryPoint<>('A'));
         // AND the game is over
         assertTrue(tennisGame.isGameOver());
     }
@@ -58,10 +58,10 @@ class TennisGameTest {
         // AND our two Player instances that are identified by those points
         Player<Character> playerA = new Player<>('A');
         Player<Character> playerB = new Player<>('B');
-        // AND a GameStateProbe instance
-        GameStateProbe<Character> gameStateProbe = mock(GameStateProbe.class);
+        // AND a GameStateListener instance
+        GameStateListener<Character> gameStateListener = mock(GameStateListener.class);
         // AND our TennisGame instance
-        TennisGame<Character> tennisGame = new TennisGame<>(playerA, playerB, gameStateProbe);
+        TennisGame<Character> tennisGame = new TennisGame<>(playerA, playerB, gameStateListener);
 
         // WHEN we attempt to process the points
         tennisGame.process(points);
@@ -69,23 +69,23 @@ class TennisGameTest {
         // THEN PlayerA and playerB both have a score of 40
         assertEquals(40, playerA.getScore());
         assertEquals(40, playerB.getScore());
-        // AND the GameStateProbe was notified exactly five times for a regular point
-        verify(gameStateProbe, times(5)).onPoint(any());
-        // AND the GameStateProbe was notified of each regular points
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 15, 0));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 15, 15));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 30, 15));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 30, 30));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 40, 30));
-        // AND the GameStateProbe was notified of a deuce
-        verify(gameStateProbe).onDeuce();
-        // AND the GameStateProbe was notified of playerA's advantage
-        verify(gameStateProbe).onAdvantageGained(new AdvantagePoint<>('A'));
-        // AND the GameStateProbe was never notified of any advantage for player B
-        verify(gameStateProbe, never()).onAdvantageGained(new AdvantagePoint<>('B'));
-        // AND the GameStateProbe was notified of a single victory, which is player A's victory
-        verify(gameStateProbe).onVictory(any());
-        verify(gameStateProbe).onVictory(new VictoryPoint<>('A'));
+        // AND the GameStateListener was notified exactly five times for a regular point
+        verify(gameStateListener, times(5)).onPoint(any());
+        // AND the GameStateListener was notified of each regular points
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 15, 0));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 15, 15));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 30, 15));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 30, 30));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 40, 30));
+        // AND the GameStateListener was notified of a deuce
+        verify(gameStateListener).onDeuce();
+        // AND the GameStateListener was notified of playerA's advantage
+        verify(gameStateListener).onAdvantageGained(new AdvantagePoint<>('A'));
+        // AND the GameStateListener was never notified of any advantage for player B
+        verify(gameStateListener, never()).onAdvantageGained(new AdvantagePoint<>('B'));
+        // AND the GameStateListener was notified of a single victory, which is player A's victory
+        verify(gameStateListener).onVictory(any());
+        verify(gameStateListener).onVictory(new VictoryPoint<>('A'));
         // AND the game is over
         assertTrue(tennisGame.isGameOver());
     }
@@ -100,9 +100,9 @@ class TennisGameTest {
         Player<Character> playerA = new Player<>('A');
         Player<Character> playerB = new Player<>('B');
         // AND a GameStatePrinter instance
-        GameStateProbe<Character> gameStateProbe = mock(GameStateProbe.class);
+        GameStateListener<Character> gameStateListener = mock(GameStateListener.class);
         // AND our TennisGame instance
-        TennisGame<Character> tennisGame = new TennisGame<>(playerA, playerB, gameStateProbe);
+        TennisGame<Character> tennisGame = new TennisGame<>(playerA, playerB, gameStateListener);
 
         // WHEN we attempt to process the points
         tennisGame.process(points);
@@ -110,23 +110,23 @@ class TennisGameTest {
         // THEN playerA and playerB both have a score of 40
         assertEquals(40, playerA.getScore());
         assertEquals(40, playerB.getScore());
-        // AND the GameStateProbe was notified exactly five times for a regular point
-        verify(gameStateProbe, times(5)).onPoint(any());
-        // AND the GameStateProbe was notified of the expected regular points
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 15, 0));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 15, 15));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 30, 15));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 30, 30));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 40, 30));
-        // AND the GameStateProbe was notified of three deuces
-        verify(gameStateProbe, times(3)).onDeuce();
-        // AND the GameStateProbe was notified of player A's advantage three times
-        verify(gameStateProbe, times(3)).onAdvantageGained(new AdvantagePoint<>('A'));
-        // AND the GameStateProbe was never notified of any advantage for player B
-        verify(gameStateProbe, never()).onAdvantageGained(new AdvantagePoint<>('B'));
-        // AND the GameStateProbe was notified of a single victory, which is player A's victory
-        verify(gameStateProbe).onVictory(any());
-        verify(gameStateProbe).onVictory(new VictoryPoint<>('A'));
+        // AND the GameStateListener was notified exactly five times for a regular point
+        verify(gameStateListener, times(5)).onPoint(any());
+        // AND the GameStateListener was notified of the expected regular points
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 15, 0));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 15, 15));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 30, 15));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 30, 30));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 40, 30));
+        // AND the GameStateListener was notified of three deuces
+        verify(gameStateListener, times(3)).onDeuce();
+        // AND the GameStateListener was notified of player A's advantage three times
+        verify(gameStateListener, times(3)).onAdvantageGained(new AdvantagePoint<>('A'));
+        // AND the GameStateListener was never notified of any advantage for player B
+        verify(gameStateListener, never()).onAdvantageGained(new AdvantagePoint<>('B'));
+        // AND the GameStateListener was notified of a single victory, which is player A's victory
+        verify(gameStateListener).onVictory(any());
+        verify(gameStateListener).onVictory(new VictoryPoint<>('A'));
         // AND the game is over
         assertTrue(tennisGame.isGameOver());
     }
@@ -139,27 +139,27 @@ class TennisGameTest {
         // AND our two Player instances that are identified by those points
         Player<Character> playerA = new Player<>('A');
         Player<Character> playerB = new Player<>('B');
-        // AND a GameStateProbe instance
-        GameStateProbe<Character> gameStateProbe = mock(GameStateProbe.class);
+        // AND a GameStateListener instance
+        GameStateListener<Character> gameStateListener = mock(GameStateListener.class);
         // AND our TennisGame instance
-        TennisGame<Character> tennisGame = new TennisGame<>(playerA, playerB, gameStateProbe);
+        TennisGame<Character> tennisGame = new TennisGame<>(playerA, playerB, gameStateListener);
 
         // WHEN we attempt to process the points
         tennisGame.process(points);
 
         // THEN playerA has a score of 40
         assertEquals(40, playerA.getScore());
-        // AND the GameStateProbe was notified exactly three times for a regular point
-        verify(gameStateProbe, times(3)).onPoint(any());
-        // AND the GameStateProbe was notified of the expected regular points
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 15, 0));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 30, 0));
-        verify(gameStateProbe).onPoint(new RegularPoint<>('A', 'B', 40, 0));
-        // AND the GameStateProbe was never notified on any deuce
-        verify(gameStateProbe, never()).onDeuce();
-        // AND the GameStateProbe was notified of playerA's victory
-        verify(gameStateProbe).onVictory(any());
-        verify(gameStateProbe).onVictory(new VictoryPoint<>('A'));
+        // AND the GameStateListener was notified exactly three times for a regular point
+        verify(gameStateListener, times(3)).onPoint(any());
+        // AND the GameStateListener was notified of the expected regular points
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 15, 0));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 30, 0));
+        verify(gameStateListener).onPoint(new RegularPoint<>('A', 'B', 40, 0));
+        // AND the GameStateListener was never notified on any deuce
+        verify(gameStateListener, never()).onDeuce();
+        // AND the GameStateListener was notified of playerA's victory
+        verify(gameStateListener).onVictory(any());
+        verify(gameStateListener).onVictory(new VictoryPoint<>('A'));
         // AND the game is over
         assertTrue(tennisGame.isGameOver());
     }
