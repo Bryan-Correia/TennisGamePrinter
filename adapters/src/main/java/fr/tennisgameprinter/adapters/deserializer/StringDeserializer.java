@@ -3,6 +3,7 @@ package fr.tennisgameprinter.adapters.deserializer;
 import fr.tennisgameprinter.domain.game.point.input.Point;
 import fr.tennisgameprinter.domain.ports.deserializer.InputDeserializer;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,10 @@ import java.util.List;
 public class StringDeserializer implements InputDeserializer<String, Character> {
     @Override
     public List<Point<Character>> deserialize(final String input) {
-        return null;
+        List<Point<Character>> points = new ArrayList<>();
+        for (int i = 0; i < input.length(); ++i) {
+            points.add(new Point<>(input.charAt(i)));
+        }
+        return points;
     }
 }
