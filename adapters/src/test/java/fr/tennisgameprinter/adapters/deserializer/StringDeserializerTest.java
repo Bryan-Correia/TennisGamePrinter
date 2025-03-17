@@ -7,7 +7,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class StringDeserializerTest {
+class StringDeserializerTest {
     @Test
     void testDeserialize() {
         // GIVEN a String input
