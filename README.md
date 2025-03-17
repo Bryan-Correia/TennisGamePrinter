@@ -34,7 +34,7 @@ The provided tennis game is inconsistent as it showcased less points than needed
 
 Ensure you have the following installed:
 - **Java 21** (Check with `java -version`)
-- **Maven 3.9.6** (Check with `mvn -version`)
+- **Maven (version >= 3.9.6)** (Check with `mvn -version`)
 
 # Architecture
 
@@ -70,8 +70,11 @@ It also contains a *TennisGameInputReader* that will read the end-user's input, 
 players to be identified as **A** and **B**.
 
 The implementations of *ports* found in this module are the ones that define the type of the input as well as the type that identifies each player.
-This means that if we were to process any other type of input than a string, let's say some structured json data, then all we need to do is write a dedicated 
-implementation of an *InputDeserializer* that takes json data instead. Our domain will not care and will still be able to simulate the tennis game all the same.
+
+This means that if we were to process any type of input other than a string, let's say some structured json data that would hold real tennis players' name,
+then all we need to do is write a dedicated implementation of an *InputDeserializer* that takes json data instead, and produces tennis points that hold the players' name as a string. 
+
+Our domain will not care of such change, thanks to hexagonal architecture. We will still be able to simulate the tennis game all the same, without requiring us to change a single line of code in our domain.
 
 ## Bootstrap module
 
