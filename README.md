@@ -54,9 +54,9 @@ by our application. It doesn't have any knowledge of printing tennis games eithe
 Overall, this module simply allows deserializing an input of an unknown type into a collection of tennis points that identify players with
 another unknown type as well. Then, it simulates the actual tennis game logic and notifies a listener of each point's outcome.
 
-To do so, it exposes two interfaces referred to as *ports* by the hexagonal architecture principle. These two interfaces, or ports, are :
+To do so, it exposes two interfaces referred to as *ports* by the hexagonal architecture principle. These two interfaces, or *ports*, are :
 * **InputDeserializer** : takes an input of type < I > and produces a collection of tennis points. Each tennis point identifies a winning player of type < P >.
-* **GameStateListener** : gets notified of every point outcome, that is, a winner of type < P >.
+* **GameStateListener** : gets notified of every point outcome, that is, either a regular, an advantage, a deuce, or a victory point.
 
 ## Adapters module
 
