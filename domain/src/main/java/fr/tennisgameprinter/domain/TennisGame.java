@@ -67,11 +67,11 @@ public class TennisGame<P> {
             return;
         }
         if (advantageToFirstPlayer()) {
-            gameStateListener.onAdvantageGained(new AdvantagePoint<>(firstPlayer.getId()));
+            gameStateListener.onAdvantage(new AdvantagePoint<>(firstPlayer.getId()));
             return;
         }
         if (advantageToSecondPlayer()) {
-            gameStateListener.onAdvantageGained(new AdvantagePoint<>(secondPlayer.getId()));
+            gameStateListener.onAdvantage(new AdvantagePoint<>(secondPlayer.getId()));
             return;
         }
         gameStateListener.onPoint(new RegularPoint<>(firstPlayer.getId(), secondPlayer.getId(), firstPlayer.getScore(), secondPlayer.getScore()));

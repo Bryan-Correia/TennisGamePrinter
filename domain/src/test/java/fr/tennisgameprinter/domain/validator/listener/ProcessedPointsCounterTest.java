@@ -39,11 +39,11 @@ class ProcessedPointsCounterTest {
     }
 
     @Test
-    void testOnAdvantageGained() {
-        // GIVEN a point where advantage was gained
-        AdvantagePoint<Character> advantageGainedPoint = new AdvantagePoint<>('A');
-        // WHEN we call the onAdvantageGained() method and retrieve the points counter
-        processedPointsCounter.onAdvantageGained(advantageGainedPoint);
+    void testOnAdvantage() {
+        // GIVEN an advantage point
+        AdvantagePoint<Character> advantagePoint = new AdvantagePoint<>('A');
+        // WHEN we call the onAdvantage() method and retrieve the points counter
+        processedPointsCounter.onAdvantage(advantagePoint);
         int pointsCounter = processedPointsCounter.getPointsCounter();
         // THEN it is equal to one
         assertEquals(1, pointsCounter);
@@ -80,17 +80,17 @@ class ProcessedPointsCounterTest {
                 new RegularPoint<>('A', 'B', 40, 40)
         );
         // AND an advantage point
-        AdvantagePoint<Character> advantageGainedPointA = new AdvantagePoint<>('A');
+        AdvantagePoint<Character> advantagePointA = new AdvantagePoint<>('A');
         // AND assuming a deuce occurred
         processedPointsCounter.onDeuce();
         // AND an advantage point followed by a victory point
-        AdvantagePoint<Character> advantageGainedPointB = new AdvantagePoint<>('A');
+        AdvantagePoint<Character> advantagePointB = new AdvantagePoint<>('A');
         VictoryPoint<Character> victoryPoint = new VictoryPoint<>('A');
         // AND we call the onPoint() method for all regular points
         regularPoints.forEach(processedPointsCounter::onPoint);
-        // AND we call the onAdvantageGained() method for all advantage gained points
-        processedPointsCounter.onAdvantageGained(advantageGainedPointA);
-        processedPointsCounter.onAdvantageGained(advantageGainedPointB);
+        // AND we call the onAdvantage() method for all advantage points
+        processedPointsCounter.onAdvantage(advantagePointA);
+        processedPointsCounter.onAdvantage(advantagePointB);
         // AND we call the onVictory() method for the victory point
         processedPointsCounter.onVictory(victoryPoint);
 

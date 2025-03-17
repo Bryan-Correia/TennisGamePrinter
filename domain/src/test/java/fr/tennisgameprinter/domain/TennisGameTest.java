@@ -80,9 +80,9 @@ class TennisGameTest {
         // AND the GameStateListener was notified of a deuce
         verify(gameStateListener).onDeuce();
         // AND the GameStateListener was notified of playerA's advantage
-        verify(gameStateListener).onAdvantageGained(new AdvantagePoint<>('A'));
+        verify(gameStateListener).onAdvantage(new AdvantagePoint<>('A'));
         // AND the GameStateListener was never notified of any advantage for player B
-        verify(gameStateListener, never()).onAdvantageGained(new AdvantagePoint<>('B'));
+        verify(gameStateListener, never()).onAdvantage(new AdvantagePoint<>('B'));
         // AND the GameStateListener was notified of a single victory, which is player A's victory
         verify(gameStateListener).onVictory(any());
         verify(gameStateListener).onVictory(new VictoryPoint<>('A'));
@@ -121,9 +121,9 @@ class TennisGameTest {
         // AND the GameStateListener was notified of three deuces
         verify(gameStateListener, times(3)).onDeuce();
         // AND the GameStateListener was notified of player A's advantage three times
-        verify(gameStateListener, times(3)).onAdvantageGained(new AdvantagePoint<>('A'));
+        verify(gameStateListener, times(3)).onAdvantage(new AdvantagePoint<>('A'));
         // AND the GameStateListener was never notified of any advantage for player B
-        verify(gameStateListener, never()).onAdvantageGained(new AdvantagePoint<>('B'));
+        verify(gameStateListener, never()).onAdvantage(new AdvantagePoint<>('B'));
         // AND the GameStateListener was notified of a single victory, which is player A's victory
         verify(gameStateListener).onVictory(any());
         verify(gameStateListener).onVictory(new VictoryPoint<>('A'));

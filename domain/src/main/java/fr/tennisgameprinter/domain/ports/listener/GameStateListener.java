@@ -12,7 +12,7 @@ import fr.tennisgameprinter.domain.game.point.output.VictoryPoint;
  */
 public interface GameStateListener<P> {
     void onPoint(RegularPoint<P> regularPoint);
-    void onAdvantageGained(AdvantagePoint<P> advantagePoint);
+    void onAdvantage(AdvantagePoint<P> advantagePoint);
     void onDeuce();
     void onVictory(VictoryPoint<P> victoryPoint);
 }

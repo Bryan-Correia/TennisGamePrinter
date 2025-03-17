@@ -20,7 +20,7 @@ public class ProcessedPointsCounter<P> implements GameStateListener<P> {
     }
 
     @Override
-    public void onAdvantageGained(final AdvantagePoint<P> advantagePoint) {
+    public void onAdvantage(final AdvantagePoint<P> advantagePoint) {
         pointsCounter++;
     }
 
